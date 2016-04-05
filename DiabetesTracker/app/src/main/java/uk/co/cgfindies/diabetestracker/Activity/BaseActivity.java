@@ -21,6 +21,9 @@ public class BaseActivity extends TabbedAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
         ActionBar actionBar = getSupportActionBar();
 
         ActionBar.Tab tab = actionBar.newTab().setText("Tab 1");
@@ -35,7 +38,6 @@ public class BaseActivity extends TabbedAppCompatActivity {
         Fragment fragment3 = PlaceholderFragment.newInstance(2);
         addTab(tab3, fragment3);
 
-        super.onCreate(savedInstanceState);
     }
 
     @Override
