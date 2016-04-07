@@ -26,7 +26,7 @@ public class AddBloodSugarActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_blood_sugar);
+        super.onCreate(savedInstanceState);
     }
 }
