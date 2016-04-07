@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">Diabetes Tracker</string>
     <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- Tab Names -->
+    <string name="tab_name_add">Add</string>
+    <string name="tab_name_list">List</string>
+    <string name="tab_name_graph">Graph</string>
+
+    <!-- Fragment Titles -->
+    <string name="fragment_title_add">Add Reading</string>
+    <string name="fragment_title_list">List Readings</string>
+    <string name="fragment_title_graph">Readings Graph</string>
+
+    <!-- Placeholders -->
+    <string name="feature_coming">Coming Soon!</string>
 </resources>
