@@ -45,16 +45,17 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(Bundle bundle) {
         super.onActivityCreated(bundle);
 
-        if (bundle != null)
+        Bundle args = getArguments();
+        if (args != null)
         {
-            if (bundle.containsKey(ARG_FRAGMENT_TITLE))
+            if (args.containsKey(ARG_FRAGMENT_TITLE))
             {
-                sectionLabel.setText(getArguments().getString(ARG_FRAGMENT_TITLE));
+                sectionLabel.setText(args.getString(ARG_FRAGMENT_TITLE));
             }
 
-            if (bundle.containsKey(ARG_FRAGMENT_TEXT))
+            if (args.containsKey(ARG_FRAGMENT_TEXT))
             {
-                sectionText.setText(getArguments().getString(ARG_FRAGMENT_TEXT));
+                sectionText.setText(args.getString(ARG_FRAGMENT_TEXT));
             }
         }
 

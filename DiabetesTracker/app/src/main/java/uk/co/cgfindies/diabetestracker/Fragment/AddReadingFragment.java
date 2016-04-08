@@ -24,7 +24,6 @@ public class AddReadingFragment extends BaseFragment {
     @Override
     protected View onCreateView(Bundle savedInstanceState, LayoutInflater inflater, ViewGroup container)
     {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_reading, container, false);
     }
 
