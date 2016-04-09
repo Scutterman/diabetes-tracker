@@ -1,4 +1,4 @@
-package uk.co.cgfindies.diabetestracker.uk.co.cgfindies.diabetestracker.Model;
+package uk.co.cgfindies.diabetestracker.Model;
 
 import org.droidparts.annotation.sql.Column;
 import org.droidparts.annotation.sql.Table;

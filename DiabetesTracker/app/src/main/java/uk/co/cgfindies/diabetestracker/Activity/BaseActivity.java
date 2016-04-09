@@ -15,12 +15,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import uk.co.cgfindies.diabetestracker.R;
 
 /**
  * Created by Scutterman on 04/04/2016.
  */
-public class BaseActivity extends TabbedAppCompatActivity {
+public class BaseActivity extends TabbedAppCompatActivity implements View.OnClickListener {
+
+    private List<View.OnClickListener> clicks = new ArrayList<View.OnClickListener>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,6 +55,28 @@ public class BaseActivity extends TabbedAppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onAttachFragment(android.support.v4.app.Fragment fragment)
+    {
+        super.onAttachFragment(fragment);
+
+        if (fragment instanceof View.OnClickListener)
+        {
+            clicks.add((View.OnClickListener)fragment);
+        }
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        Iterator<View.OnClickListener> it = clicks.iterator();
+        while (it.hasNext())
+        {
+            it.next().onClick(v);
+        }
     }
 
     protected void addTabs()

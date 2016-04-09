@@ -1,18 +1,34 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Fragment.AddReadingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <org.droidparts.widget.ClearableEditText
         android:id="@+id/add_reading_value"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"/>
+
+    <DatePicker
+        android:id="@+id/add_reading_date_picker"
+        android:layout_width="match_parent"
+        android:calendarViewShown="true"
+        android:spinnersShown="false"
+        android:layout_weight="4"
+        android:layout_height="0dp" />
+
+    <TimePicker
+        android:id="@+id/add_reading_time_picker"
+        android:layout_weight="4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
     <Button
         android:id="@+id/add_reading_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/fragment_title_add" />
 
-</FrameLayout>
+</LinearLayout>

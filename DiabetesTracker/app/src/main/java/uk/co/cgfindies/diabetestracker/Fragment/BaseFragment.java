@@ -17,7 +17,7 @@ import uk.co.cgfindies.diabetestracker.R;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class BaseFragment extends Fragment implements View.OnClickListener {
+public class BaseFragment extends Fragment {
 
     /**
      * The fragment argument representing the fragment title for this fragment
@@ -60,12 +60,6 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
         }
 
 
-    }
-
-    @Override
-    public void onClick(View v)
-    {
-        // Override to use
     }
 
     /**

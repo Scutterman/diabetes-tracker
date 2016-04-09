@@ -6,14 +6,15 @@ import org.droidparts.persist.sql.EntityManager;
 
 import java.util.Date;
 
-import uk.co.cgfindies.diabetestracker.uk.co.cgfindies.diabetestracker.Model.Reading;
+import uk.co.cgfindies.diabetestracker.Model.Reading;
 
 /**
  * Created by Scutterman on 08/04/2016.
  */
 public class ReadingManager extends EntityManager<Reading> {
 
-    public ReadingManager(Context ctx) {
+    public ReadingManager(Context ctx)
+    {
         super(Reading.class, ctx);
     }
 

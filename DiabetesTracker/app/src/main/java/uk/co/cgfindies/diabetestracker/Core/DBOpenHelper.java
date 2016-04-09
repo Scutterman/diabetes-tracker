@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import uk.co.cgfindies.diabetestracker.Contract.DB;
-import uk.co.cgfindies.diabetestracker.uk.co.cgfindies.diabetestracker.Model.Reading;
+import uk.co.cgfindies.diabetestracker.Model.Reading;
 
 /**
  * Created by Scutterman on 04/04/2016.

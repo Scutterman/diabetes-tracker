@@ -11,7 +11,7 @@ import uk.co.cgfindies.diabetestracker.Fragment.AddReadingFragment;
 import uk.co.cgfindies.diabetestracker.Fragment.BaseFragment;
 import uk.co.cgfindies.diabetestracker.R;
 
-public class BloodSugarActivity extends BaseActivity implements View.OnClickListener
+public class BloodSugarActivity extends BaseActivity
 {
 
     @Override
@@ -21,11 +21,6 @@ public class BloodSugarActivity extends BaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onClick(View v)
-    {
-
-    }
     protected void addTabs()
     {
         addTab("add_fragment");
