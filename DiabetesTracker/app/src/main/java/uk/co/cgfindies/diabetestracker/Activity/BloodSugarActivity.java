@@ -50,7 +50,7 @@ public class BloodSugarActivity extends BaseActivity
         switch (tag)
         {
             case "add_fragment":
-                return AddReadingFragment.newInstance(getString(R.string.fragment_title_add), getString(R.string.feature_coming));
+                return AddReadingFragment.newInstance();
 
             case "list_fragment":
                 return BaseFragment.newInstance(getString(R.string.fragment_title_list), getString(R.string.feature_coming));

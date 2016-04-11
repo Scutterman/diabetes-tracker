@@ -1,5 +1,6 @@
 package uk.co.cgfindies.diabetestracker.Fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,9 @@ import android.widget.TextView;
 
 import org.droidparts.annotation.inject.InjectView;
 import org.droidparts.fragment.support.v4.Fragment;
+import org.droidparts.util.L;
 
+import uk.co.cgfindies.diabetestracker.Activity.BaseActivity;
 import uk.co.cgfindies.diabetestracker.R;
 
 /**
@@ -77,4 +80,25 @@ public class BaseFragment extends Fragment {
         return fragment;
     }
 
+    public void clearErrors()
+    {
+        L.w("Clearing errors from BaseFragment");
+        Activity activity = getActivity();
+        if (activity instanceof BaseActivity)
+        {
+            L.w("Activity found");
+            ((BaseActivity) activity).clearErrors();
+        }
+    }
+
+    public void addError(String errorMessage)
+    {
+        L.w("Adding error from BaseFragment " + errorMessage);
+        Activity activity = getActivity();
+        if (activity instanceof BaseActivity)
+        {
+            L.w("Activity found");
+            ((BaseActivity) activity).addError(errorMessage);
+        }
+    }
 }

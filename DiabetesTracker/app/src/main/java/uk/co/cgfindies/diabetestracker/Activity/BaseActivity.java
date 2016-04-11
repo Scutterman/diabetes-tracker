@@ -3,6 +3,7 @@ package uk.co.cgfindies.diabetestracker.Activity;
 import org.droidparts.activity.support.v7.TabbedAppCompatActivity;
 import org.droidparts.annotation.inject.InjectView;
 import org.droidparts.fragment.support.v4.Fragment;
+import org.droidparts.util.L;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -27,6 +28,9 @@ import uk.co.cgfindies.diabetestracker.R;
 public class BaseActivity extends TabbedAppCompatActivity implements View.OnClickListener {
 
     private List<View.OnClickListener> clicks = new ArrayList<View.OnClickListener>();
+
+    @InjectView(id=R.id.error_box)
+    private ViewGroup errorBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -79,6 +83,27 @@ public class BaseActivity extends TabbedAppCompatActivity implements View.OnClic
         }
     }
 
+    public void clearErrors()
+    {
+        L.w("Clearing errors from BaseActivity");
+        if (errorBox != null)
+        {
+            L.w("errorBox not null");
+            errorBox.removeAllViews();
+        }
+    }
+
+    public void addError(String errorMessage)
+    {
+        L.w("Adding error from BaseActivity " + errorMessage);
+        if (errorBox != null)
+        {
+            L.w("errorBox not null");
+            TextView errorMessageView = new TextView(this);
+            errorMessageView.setText(errorMessage);
+            errorBox.addView(errorMessageView);
+        }
+    }
     protected void addTabs()
     {
         // Override to use.
