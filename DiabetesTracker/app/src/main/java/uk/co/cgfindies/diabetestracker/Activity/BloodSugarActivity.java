@@ -11,9 +11,15 @@ import uk.co.cgfindies.diabetestracker.Fragment.AddReadingFragment;
 import uk.co.cgfindies.diabetestracker.Fragment.BaseFragment;
 import uk.co.cgfindies.diabetestracker.R;
 
+/**
+ * Provide an Activity to manage blood sugar levels.
+ */
 public class BloodSugarActivity extends BaseActivity
 {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -21,6 +27,10 @@ public class BloodSugarActivity extends BaseActivity
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Add the tabs from this activity by specifying tags.
+     */
+    @Override
     protected void addTabs()
     {
         addTab("add_fragment");
@@ -28,6 +38,13 @@ public class BloodSugarActivity extends BaseActivity
         addTab("graph_fragment");
     }
 
+    /**
+     * Get a Tab
+     *
+     * @param tag Used to specify what Tab you want to return
+     * @return The Tab
+     */
+    @Override
     protected ActionBar.Tab getTabFromTag(String tag)
     {
         switch (tag)
@@ -45,6 +62,13 @@ public class BloodSugarActivity extends BaseActivity
         }
     }
 
+    /**
+     * Get a Fragment to associate with a Tab
+     *
+     * @param tag Used to specify what Fragment you want to return
+     * @return The Fragment
+     */
+    @Override
     protected org.droidparts.fragment.support.v4.Fragment getFragmentFromTag(String tag)
     {
         switch (tag)

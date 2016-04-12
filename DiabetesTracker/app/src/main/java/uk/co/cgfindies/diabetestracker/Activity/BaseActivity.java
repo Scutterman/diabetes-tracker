@@ -23,15 +23,17 @@ import java.util.List;
 import uk.co.cgfindies.diabetestracker.R;
 
 /**
- * Created by Scutterman on 04/04/2016.
+ * Provides methods that will be useful to every activity in the app.
  */
 public class BaseActivity extends TabbedAppCompatActivity implements View.OnClickListener {
 
+    // Store a list of all Fragments that implement OnClickListener
     private List<View.OnClickListener> clicks = new ArrayList<View.OnClickListener>();
 
-    @InjectView(id=R.id.error_box)
-    private ViewGroup errorBox;
-
+    /**
+     * Create the Activity and trigger adding the tags.
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -39,6 +41,9 @@ public class BaseActivity extends TabbedAppCompatActivity implements View.OnClic
         addTabs();
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -46,6 +51,9 @@ public class BaseActivity extends TabbedAppCompatActivity implements View.OnClic
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -53,15 +61,13 @@ public class BaseActivity extends TabbedAppCompatActivity implements View.OnClic
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
-
+    /**
+     * When a Fragment with an OnClickListener is attached, add it to the list of OnClickListeners.
+     * @param fragment The fragment that was attached.
+     */
     @Override
     public void onAttachFragment(android.support.v4.app.Fragment fragment)
     {
@@ -73,53 +79,44 @@ public class BaseActivity extends TabbedAppCompatActivity implements View.OnClic
         }
     }
 
+    /**
+     * When a click happens, see if there are any active fragments that can handle the click.
+     * @param v The view that was clicked.
+     */
     @Override
     public void onClick(View v)
     {
         Iterator<View.OnClickListener> it = clicks.iterator();
+
+        // Iterate over all of the Fragments that have an OnClickListener
         while (it.hasNext())
         {
-            it.next().onClick(v);
-        }
-    }
+            View.OnClickListener listener = it.next();
 
-    public void clearErrors()
-    {
-        L.w("Clearing errors from BaseActivity");
-        if (errorBox != null)
-        {
-            L.w("errorBox not null");
-            errorBox.removeAllViews();
+            // If the Fragment is still available, bubble the click event to it
+            if (listener != null) {
+                listener.onClick(v);
+            }
         }
-    }
-
-    public void addError(String errorMessage)
-    {
-        L.w("Adding error from BaseActivity " + errorMessage);
-        if (errorBox != null)
-        {
-            L.w("errorBox not null");
-            TextView errorMessageView = new TextView(this);
-            errorMessageView.setText(errorMessage);
-            errorBox.addView(errorMessageView);
-        }
-    }
-    protected void addTabs()
-    {
-        // Override to use.
     }
 
     /**
-     * BloodSugarActivity a tab to the actionbar
+     * Add a tab to the actionbar.
+     * The tab is provided by overriding getTabFromTag()
+     * The fragment is provided by overriding getFragmentFromTag()
+     * Fragments are automatically added to the ViewGroup R.id.main_content
      *
-     * @param tag String The tag of the tab, also used to work out what content the tab has.
+     * @param tag The tag of the tab, also used to work out what content the tab has.
      */
     protected void addTab(String tag)
     {
+        // Get the Tab
         ActionBar.Tab tab = getTabFromTag(tag);
 
+        // Get the Fragment, if it's already been added to the ViewGroup
         Fragment fragment = (Fragment)(getSupportFragmentManager().findFragmentByTag(tag));
 
+        // Get the Fragment and add it to the ViewGroup if it wasn't found
         if (fragment == null)
         {
             fragment = getFragmentFromTag(tag);
@@ -127,18 +124,38 @@ public class BaseActivity extends TabbedAppCompatActivity implements View.OnClic
             ft.add(R.id.main_content, fragment, tag).commit();
         }
 
-        if (fragment != null && tab != null)
+        // If we found a Fragment and a Tab, add it to the tab bar.
+        if (tab != null && fragment != null)
         {
             addTab(tab, fragment);
         }
     }
 
+    /**
+     * Called automatically by onCreate()
+     * Override and put one or more calls to addTab() inside.
+     */
+    protected void addTabs() { }
+
+    /**
+     * Called by addTab(String tag)
+     * Override to use
+     *
+     * @param tag Used to specify what Tab you want to return
+     * @return A Tab based on the specified tag
+     */
     protected ActionBar.Tab getTabFromTag(String tag)
     {
-        // Override to use
         return null;
     }
 
+    /**
+     * Called by addTab(String tag)
+     * Override to use
+     *
+     * @param tag Used to specify what Fragment you want to return
+     * @return a Fragment based on the specified tag.
+     */
     protected Fragment getFragmentFromTag(String tag)
     {
         // Override to use

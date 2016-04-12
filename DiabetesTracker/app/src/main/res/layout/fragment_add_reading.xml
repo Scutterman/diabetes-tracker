@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".Fragment.AddReadingFragment">
 
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"/>
 
-    <EditText
+    <TextView
         android:id="@+id/add_reading_date_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -23,11 +23,9 @@
         android:text="@string/fragment_title_add" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/error_box">
+       style="@style/MessageBox" />
 
-    </LinearLayout>
+    <LinearLayout
+        style="@style/ErrorBox"/>
 
 </LinearLayout>

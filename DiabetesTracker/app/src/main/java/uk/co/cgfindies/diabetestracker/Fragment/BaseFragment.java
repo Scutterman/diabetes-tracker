@@ -15,10 +15,7 @@ import uk.co.cgfindies.diabetestracker.Activity.BaseActivity;
 import uk.co.cgfindies.diabetestracker.R;
 
 /**
- * Created by Scutterman on 08/04/2016.
- */
-/**
- * A placeholder fragment containing a simple view.
+ * Provides methods that will be useful to every Fragment in the app.
  */
 public class BaseFragment extends Fragment {
 
@@ -32,18 +29,43 @@ public class BaseFragment extends Fragment {
      */
     private static final String ARG_FRAGMENT_TEXT = "fragment_text";
 
+    /**
+     * Somewhere to add messages to.
+     */
+    @InjectView(id=R.id.message_box)
+    private ViewGroup messageBox;
+
+    /**
+     * Somewhere to add errors to.
+     */
+    @InjectView(id=R.id.error_box)
+    private ViewGroup errorBox;
+
+    /**
+     * Placeholder title for the Fragment.
+     */
     @InjectView(id = R.id.section_label)
     private TextView sectionLabel;
 
+    /**
+     * Placeholder description for the Fragment.
+     */
     @InjectView(id = R.id.section_text)
     private TextView sectionText;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected View onCreateView(Bundle savedInstanceState, LayoutInflater inflater, ViewGroup container)
     {
         return inflater.inflate(R.layout.fragment_add_blood_sugar, null);
     }
 
+    /**
+     * Add the placeholder title and description, if they have been provided and there's somewhere to put them.
+     * @param bundle Unused here, passed to the super method.
+     */
     @Override
     public void onActivityCreated(Bundle bundle) {
         super.onActivityCreated(bundle);
@@ -51,12 +73,12 @@ public class BaseFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null)
         {
-            if (args.containsKey(ARG_FRAGMENT_TITLE))
+            if (sectionLabel != null && args.containsKey(ARG_FRAGMENT_TITLE))
             {
                 sectionLabel.setText(args.getString(ARG_FRAGMENT_TITLE));
             }
 
-            if (args.containsKey(ARG_FRAGMENT_TEXT))
+            if (sectionText != null && args.containsKey(ARG_FRAGMENT_TEXT))
             {
                 sectionText.setText(args.getString(ARG_FRAGMENT_TEXT));
             }
@@ -66,8 +88,11 @@ public class BaseFragment extends Fragment {
     }
 
     /**
-     * Returns a new instance of this fragment for the given section
-     * number.
+     * Create an instance of this Fragment that can be used as a placeholder.
+     *
+     * @param fragmentTitle The title of the placeholder Fragment
+     * @param fragmentText The description of the placeholder Fragment
+     * @return the Fragment instance
      */
     public static BaseFragment newInstance(String fragmentTitle, String fragmentText) {
         Bundle args = new Bundle();
@@ -80,25 +105,55 @@ public class BaseFragment extends Fragment {
         return fragment;
     }
 
-    public void clearErrors()
+    /**
+     * Remove all messages from the messageBox ViewGroup
+     */
+    public void clearMessages()
     {
-        L.w("Clearing errors from BaseFragment");
-        Activity activity = getActivity();
-        if (activity instanceof BaseActivity)
+        if (messageBox != null)
         {
-            L.w("Activity found");
-            ((BaseActivity) activity).clearErrors();
+            messageBox.removeAllViews();
         }
     }
 
-    public void addError(String errorMessage)
+    /**
+     * Add a message to the messageBox ViewGroup
+     * @param message The message to add
+     */
+    public void addMessage(String message)
     {
-        L.w("Adding error from BaseFragment " + errorMessage);
-        Activity activity = getActivity();
-        if (activity instanceof BaseActivity)
+        if (messageBox != null)
         {
-            L.w("Activity found");
-            ((BaseActivity) activity).addError(errorMessage);
+
+            TextView messageView = (TextView)getActivity().getLayoutInflater().inflate(R.layout.message_item, null);
+            messageView.setText(message);
+            messageBox.addView(messageView);
         }
     }
+
+    /**
+     * Remove all errors from the errorBox ViewGroup
+     */
+    public void clearErrors()
+    {
+        if (errorBox != null)
+        {
+            errorBox.removeAllViews();
+        }
+    }
+
+    /**
+     * Add an error to the errorBox ViewGroup
+     * @param errorMessage The error to add
+     */
+    public void addError(String errorMessage)
+    {
+        if (errorBox != null)
+        {
+            TextView errorMessageView = (TextView)getActivity().getLayoutInflater().inflate(R.layout.error_item, null);
+            errorMessageView.setText(errorMessage);
+            errorBox.addView(errorMessageView);
+        }
+    }
+
 }

@@ -10,7 +10,7 @@ import uk.co.cgfindies.diabetestracker.Contract.DB;
 import uk.co.cgfindies.diabetestracker.Core.DBOpenHelper;
 
 /**
- * Created by Scutterman on 08/04/2016.
+ * Provides a container for a row in the Reading table.
  */
 @Table(name = DB.Table.READING)
 public class Reading extends Entity
