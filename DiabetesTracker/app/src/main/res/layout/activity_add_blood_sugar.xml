@@ -8,6 +8,6 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:fillViewport="true"
-    tools:context=".Activity.AddBloodSugarActivity">
+    tools:context=".Activity.BloodSugarActivity">
 
 </FrameLayout>

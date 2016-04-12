@@ -3,6 +3,7 @@ package uk.co.cgfindies.diabetestracker.Activity;
 import org.droidparts.activity.support.v7.TabbedAppCompatActivity;
 import org.droidparts.annotation.inject.InjectView;
 import org.droidparts.fragment.support.v4.Fragment;
+import org.droidparts.util.L;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -13,23 +14,36 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import uk.co.cgfindies.diabetestracker.R;
 
 /**
- * Created by Scutterman on 04/04/2016.
+ * Provides methods that will be useful to every activity in the app.
  */
-public class BaseActivity extends TabbedAppCompatActivity {
+public class BaseActivity extends TabbedAppCompatActivity implements View.OnClickListener {
 
+    // Store a list of all Fragments that implement OnClickListener
+    private List<View.OnClickListener> clicks = new ArrayList<View.OnClickListener>();
+
+    /**
+     * Create the Activity and trigger adding the tags.
+     * {@inheritDoc}
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         addTabs();
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -37,6 +51,9 @@ public class BaseActivity extends TabbedAppCompatActivity {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -44,32 +61,62 @@ public class BaseActivity extends TabbedAppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
-    protected void addTabs()
+    /**
+     * When a Fragment with an OnClickListener is attached, add it to the list of OnClickListeners.
+     * @param fragment The fragment that was attached.
+     */
+    @Override
+    public void onAttachFragment(android.support.v4.app.Fragment fragment)
     {
-        addTab("add_fragment");
-        addTab("list_fragment");
-        addTab("graph_fragment");
+        super.onAttachFragment(fragment);
+
+        if (fragment instanceof View.OnClickListener)
+        {
+            clicks.add((View.OnClickListener)fragment);
+        }
     }
 
     /**
-     * Add a tab to the actionbar
+     * When a click happens, see if there are any active fragments that can handle the click.
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v)
+    {
+        Iterator<View.OnClickListener> it = clicks.iterator();
+
+        // Iterate over all of the Fragments that have an OnClickListener
+        while (it.hasNext())
+        {
+            View.OnClickListener listener = it.next();
+
+            // If the Fragment is still available, bubble the click event to it
+            if (listener != null) {
+                listener.onClick(v);
+            }
+        }
+    }
+
+    /**
+     * Add a tab to the actionbar.
+     * The tab is provided by overriding getTabFromTag()
+     * The fragment is provided by overriding getFragmentFromTag()
+     * Fragments are automatically added to the ViewGroup R.id.main_content
      *
-     * @param tag String The tag of the tab, also used to work out what content the tab has.
+     * @param tag The tag of the tab, also used to work out what content the tab has.
      */
     protected void addTab(String tag)
     {
+        // Get the Tab
         ActionBar.Tab tab = getTabFromTag(tag);
 
+        // Get the Fragment, if it's already been added to the ViewGroup
         Fragment fragment = (Fragment)(getSupportFragmentManager().findFragmentByTag(tag));
 
+        // Get the Fragment and add it to the ViewGroup if it wasn't found
         if (fragment == null)
         {
             fragment = getFragmentFromTag(tag);
@@ -77,91 +124,42 @@ public class BaseActivity extends TabbedAppCompatActivity {
             ft.add(R.id.main_content, fragment, tag).commit();
         }
 
-        if (fragment != null && tab != null)
+        // If we found a Fragment and a Tab, add it to the tab bar.
+        if (tab != null && fragment != null)
         {
             addTab(tab, fragment);
         }
     }
 
+    /**
+     * Called automatically by onCreate()
+     * Override and put one or more calls to addTab() inside.
+     */
+    protected void addTabs() { }
+
+    /**
+     * Called by addTab(String tag)
+     * Override to use
+     *
+     * @param tag Used to specify what Tab you want to return
+     * @return A Tab based on the specified tag
+     */
     protected ActionBar.Tab getTabFromTag(String tag)
     {
-        switch (tag)
-        {
-            case "add_fragment":
-                return getSupportActionBar().newTab().setText(R.string.tab_name_add);
-
-            case "list_fragment":
-                return getSupportActionBar().newTab().setText(R.string.tab_name_list);
-
-            case "graph_fragment":
-                return getSupportActionBar().newTab().setText(R.string.tab_name_graph);
-            default:
-                return null;
-        }
-    }
-
-    protected Fragment getFragmentFromTag(String tag)
-    {
-        switch (tag)
-        {
-            case "add_fragment":
-                return PlaceholderFragment.newInstance(0, getString(R.string.fragment_title_add));
-
-            case "list_fragment":
-                return PlaceholderFragment.newInstance(1, getString(R.string.fragment_title_list));
-
-            case "graph_fragment":
-                return PlaceholderFragment.newInstance(2, getString(R.string.fragment_title_graph));
-            default:
-                return null;
-        }
+        return null;
     }
 
     /**
-     * A placeholder fragment containing a simple view.
+     * Called by addTab(String tag)
+     * Override to use
+     *
+     * @param tag Used to specify what Fragment you want to return
+     * @return a Fragment based on the specified tag.
      */
-    public static class PlaceholderFragment extends Fragment {
-         /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * The fragment argument representing the fragment title for this fragment
-         */
-        private static final String ARG_FRAGMENT_TITLE = "fragment_title";
-
-        @InjectView(id = R.id.section_label)
-        private TextView sectionLabel;
-
-        @InjectView(id = R.id.section_text)
-        private TextView sectionText;
-
-        @Override
-        protected View onCreateView(Bundle savedInstanceState, LayoutInflater inflater, ViewGroup container) {
-            return inflater.inflate(R.layout.fragment_add_blood_sugar, null);
-        }
-
-        @Override
-        public void onActivityCreated(Bundle bundle) {
-            super.onActivityCreated(bundle);
-            sectionLabel.setText(getArguments().getString(ARG_FRAGMENT_TITLE));
-            sectionText.setText(R.string.feature_coming);
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber, String fragmentTitle) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            args.putString(ARG_FRAGMENT_TITLE, fragmentTitle);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
+    protected Fragment getFragmentFromTag(String tag)
+    {
+        // Override to use
+        return null;
     }
+
 }
