@@ -145,8 +145,7 @@ public class AddReadingFragment extends BaseFragment implements View.OnClickList
      */
     private void setDateTakenField()
     {
-        DateFormat formatter = SimpleDateFormat.getInstance();
-        readingDate.setText(formatter.format(dateTakenCalendar.getTime()));
+        readingDate.setText(Reading.getRelativeDate(getContext(), dateTakenCalendar.getTime().getTime()));
     }
 
     /**

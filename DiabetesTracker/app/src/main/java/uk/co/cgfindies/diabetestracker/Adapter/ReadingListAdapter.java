@@ -2,6 +2,7 @@ package uk.co.cgfindies.diabetestracker.Adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -42,6 +43,7 @@ public class ReadingListAdapter extends EntityCursorAdapter<Reading> {
     public void bindView(Context context, View view, Reading reading) {
         Text2Holder holder = (Text2Holder) view.getTag();
         holder.text1.setText(Double.toString(reading.bloodSugarLevel));
-        holder.text2.setText(SimpleDateFormat.getInstance().format(reading.date_level_taken));
+
+        holder.text2.setText(Reading.getRelativeDate(getContext(), reading.date_level_taken.getTime()));
     }
 }

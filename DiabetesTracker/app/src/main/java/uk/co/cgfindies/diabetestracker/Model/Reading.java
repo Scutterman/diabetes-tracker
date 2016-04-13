@@ -1,5 +1,8 @@
 package uk.co.cgfindies.diabetestracker.Model;
 
+import android.content.Context;
+import android.text.format.DateUtils;
+
 import org.droidparts.annotation.sql.Column;
 import org.droidparts.annotation.sql.Table;
 import org.droidparts.model.Entity;
@@ -23,5 +26,16 @@ public class Reading extends Entity
 
     @Column(name = DB.ReadingColumn.DATE_CREATED)
     public Date date_created;
+
+    public static CharSequence getRelativeDate(Context ctx, long time)
+    {
+        return DateUtils.getRelativeDateTimeString(
+            ctx,
+            time,
+            DateUtils.MINUTE_IN_MILLIS,
+            DateUtils.WEEK_IN_MILLIS,
+            0
+    );
+    }
 
 }
