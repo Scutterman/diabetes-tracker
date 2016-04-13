@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import org.droidparts.annotation.inject.InjectDependency;
 import org.droidparts.fragment.support.v4.ListFragment;
+import org.droidparts.util.L;
 
 import uk.co.cgfindies.diabetestracker.Adapter.ReadingListAdapter;
 import uk.co.cgfindies.diabetestracker.Contract.DB;
@@ -20,7 +21,9 @@ import uk.co.cgfindies.diabetestracker.R;
 public class ReadingListFragment extends ListFragment {
 
     @InjectDependency
-    ReadingManager readingManager;
+    private ReadingManager readingManager;
+
+    private ReadingListAdapter adapter;
 
     /**
      * Set a ReadingListAdapter as the Fragment's ListAdapter when the Activity has been created.
@@ -30,6 +33,17 @@ public class ReadingListFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        setListAdapter(new ReadingListAdapter(getActivity(), readingManager.select().orderBy(DB.ReadingColumn.DATE_LEVEL_TAKEN, false)));
+        adapter = new ReadingListAdapter(getActivity(), readingManager.select().orderBy(DB.ReadingColumn.DATE_LEVEL_TAKEN, false));
+        setListAdapter(adapter);
     }
+
+    /**
+     * Refresh the ListView when the data changes.
+     */
+    public void refresh()
+    {
+        adapter.requeryData();
+        adapter.notifyDataSetChanged();
+    }
+
 }
