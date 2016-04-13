@@ -7,8 +7,11 @@ import android.view.View;
 
 import android.widget.Button;
 
+import android.support.v4.app.Fragment;
+
 import uk.co.cgfindies.diabetestracker.Fragment.AddReadingFragment;
 import uk.co.cgfindies.diabetestracker.Fragment.BaseFragment;
+import uk.co.cgfindies.diabetestracker.Fragment.ReadingListFragment;
 import uk.co.cgfindies.diabetestracker.R;
 
 /**
@@ -69,7 +72,7 @@ public class BloodSugarActivity extends BaseActivity
      * @return The Fragment
      */
     @Override
-    protected org.droidparts.fragment.support.v4.Fragment getFragmentFromTag(String tag)
+    protected Fragment getFragmentFromTag(String tag)
     {
         switch (tag)
         {
@@ -77,7 +80,7 @@ public class BloodSugarActivity extends BaseActivity
                 return AddReadingFragment.newInstance();
 
             case "list_fragment":
-                return BaseFragment.newInstance(getString(R.string.fragment_title_list), getString(R.string.feature_coming));
+                return (Fragment)new ReadingListFragment();
 
             case "graph_fragment":
                 return BaseFragment.newInstance(getString(R.string.fragment_title_graph), getString(R.string.feature_coming));
