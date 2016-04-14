@@ -205,12 +205,31 @@ public class AddReadingFragment extends BaseFragment implements
         {
             // Success
             addMessage(getString(R.string.add_reading_insert_successful));
+            resetReadingValue();
+            resetReadingDate();
         }
         else
         {
             // Failure
             addError(getString(R.string.add_reading_unknown_error));
         }
+    }
+
+    /**
+     * Resets the contents of the blood sugar reading value field.
+     */
+    private void resetReadingValue()
+    {
+        readingValueField.setText("");
+    }
+
+    /**
+     * Resets the contents of the reading date and calendar to the current date and time.
+     */
+    private void resetReadingDate()
+    {
+        dateTakenCalendar.setTime(new Date());
+        setDateTakenField();
     }
 
     /**
