@@ -20,6 +20,13 @@ import uk.co.cgfindies.diabetestracker.R;
 public class BaseFragment extends Fragment {
 
     /**
+     * Implement for when a fragment's tab is selected.
+     */
+    public interface FragmentSelectedListener {
+        public void onFragmentSelected();
+    }
+
+    /**
      * The fragment argument representing the fragment title for this fragment
      */
     private static final String ARG_FRAGMENT_TITLE = "fragment_title";

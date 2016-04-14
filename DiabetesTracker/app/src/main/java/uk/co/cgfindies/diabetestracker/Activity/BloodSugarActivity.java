@@ -88,13 +88,25 @@ public class BloodSugarActivity extends BaseActivity
         switch (tag)
         {
             case TAG_ADD:
-                return addFragment = AddReadingFragment.newInstance();
+                if (addFragment == null)
+                {
+                    addFragment = AddReadingFragment.newInstance();
+                }
+                return addFragment;
 
             case TAG_LIST:
-                return listFragment = new ReadingListFragment();
+                if (listFragment == null)
+                {
+                    listFragment = new ReadingListFragment();
+                }
+                return listFragment;
 
             case TAG_GRAPH:
-                return graphFragment = BaseFragment.newInstance(getString(R.string.fragment_title_graph), getString(R.string.feature_coming));
+                if (graphFragment == null)
+                {
+                    graphFragment = BaseFragment.newInstance(getString(R.string.fragment_title_graph), getString(R.string.feature_coming));
+                }
+                return graphFragment;
             default:
                 return null;
         }
@@ -111,10 +123,11 @@ public class BloodSugarActivity extends BaseActivity
 
         ActionBar.Tab tab = getSupportActionBar().getSelectedTab();
         String tag = (String)tab.getTag();
+        Fragment fragment = getFragmentFromTag(tag);
 
-        if (tag == TAG_LIST && listFragment != null)
+        if (fragment instanceof BaseFragment.FragmentSelectedListener)
         {
-            ((ReadingListFragment)listFragment).refresh();
+            ((BaseFragment.FragmentSelectedListener) fragment).onFragmentSelected();
         }
     }
 
