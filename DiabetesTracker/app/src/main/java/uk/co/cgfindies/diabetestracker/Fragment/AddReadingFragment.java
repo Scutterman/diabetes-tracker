@@ -4,7 +4,10 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -33,7 +36,10 @@ import uk.co.cgfindies.diabetestracker.Model.Reading;
 /**
  * Provide a fragment that can be used to input data to add to the Reading table.
  */
-public class AddReadingFragment extends BaseFragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener
+public class AddReadingFragment extends BaseFragment implements
+        View.OnClickListener,
+        DatePickerDialog.OnDateSetListener,
+        TimePickerDialog.OnTimeSetListener
 {
     /**
      * The button used to add the entry
@@ -145,8 +151,7 @@ public class AddReadingFragment extends BaseFragment implements View.OnClickList
      */
     private void setDateTakenField()
     {
-        DateFormat formatter = SimpleDateFormat.getInstance();
-        readingDate.setText(formatter.format(dateTakenCalendar.getTime()));
+        readingDate.setText(Reading.getRelativeDate(getContext(), dateTakenCalendar.getTime().getTime()));
     }
 
     /**

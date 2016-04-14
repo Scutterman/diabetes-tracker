@@ -2,9 +2,9 @@ package uk.co.cgfindies.diabetestracker.Activity;
 
 import org.droidparts.activity.support.v7.TabbedAppCompatActivity;
 import org.droidparts.annotation.inject.InjectView;
-import org.droidparts.fragment.support.v4.Fragment;
 import org.droidparts.util.L;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 

@@ -1,5 +1,6 @@
 package uk.co.cgfindies.diabetestracker.Activity;
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 
 import android.os.Bundle;
@@ -7,8 +8,13 @@ import android.view.View;
 
 import android.widget.Button;
 
+import android.support.v4.app.Fragment;
+
+import org.droidparts.util.L;
+
 import uk.co.cgfindies.diabetestracker.Fragment.AddReadingFragment;
 import uk.co.cgfindies.diabetestracker.Fragment.BaseFragment;
+import uk.co.cgfindies.diabetestracker.Fragment.ReadingListFragment;
 import uk.co.cgfindies.diabetestracker.R;
 
 /**
@@ -16,6 +22,14 @@ import uk.co.cgfindies.diabetestracker.R;
  */
 public class BloodSugarActivity extends BaseActivity
 {
+    private static final String TAG_ADD = "add_fragment";
+    private static final String TAG_LIST = "list_fragment";
+    private static final String TAG_GRAPH = "graph_fragment";
+
+    private Fragment addFragment;
+    private Fragment listFragment;
+    private Fragment graphFragment;
+
 
     /**
      * {@inheritDoc}
@@ -33,9 +47,9 @@ public class BloodSugarActivity extends BaseActivity
     @Override
     protected void addTabs()
     {
-        addTab("add_fragment");
-        addTab("list_fragment");
-        addTab("graph_fragment");
+        addTab(TAG_ADD);
+        addTab(TAG_LIST);
+        addTab(TAG_GRAPH);
     }
 
     /**
@@ -49,14 +63,14 @@ public class BloodSugarActivity extends BaseActivity
     {
         switch (tag)
         {
-            case "add_fragment":
-                return getSupportActionBar().newTab().setText(R.string.tab_name_add);
+            case TAG_ADD:
+                return getSupportActionBar().newTab().setText(R.string.tab_name_add).setTag(tag);
 
-            case "list_fragment":
-                return getSupportActionBar().newTab().setText(R.string.tab_name_list);
+            case TAG_LIST:
+                return getSupportActionBar().newTab().setText(R.string.tab_name_list).setTag(tag);
 
-            case "graph_fragment":
-                return getSupportActionBar().newTab().setText(R.string.tab_name_graph);
+            case TAG_GRAPH:
+                return getSupportActionBar().newTab().setText(R.string.tab_name_graph).setTag(tag);
             default:
                 return null;
         }
@@ -69,20 +83,38 @@ public class BloodSugarActivity extends BaseActivity
      * @return The Fragment
      */
     @Override
-    protected org.droidparts.fragment.support.v4.Fragment getFragmentFromTag(String tag)
+    protected Fragment getFragmentFromTag(String tag)
     {
         switch (tag)
         {
-            case "add_fragment":
-                return AddReadingFragment.newInstance();
+            case TAG_ADD:
+                return addFragment = AddReadingFragment.newInstance();
 
-            case "list_fragment":
-                return BaseFragment.newInstance(getString(R.string.fragment_title_list), getString(R.string.feature_coming));
+            case TAG_LIST:
+                return listFragment = new ReadingListFragment();
 
-            case "graph_fragment":
-                return BaseFragment.newInstance(getString(R.string.fragment_title_graph), getString(R.string.feature_coming));
+            case TAG_GRAPH:
+                return graphFragment = BaseFragment.newInstance(getString(R.string.fragment_title_graph), getString(R.string.feature_coming));
             default:
                 return null;
+        }
+    }
+
+    /**
+     * Refresh the ListView when the tab is changed and the ListView is now showing.
+     * {@inheritDoc}
+     */
+    @Override
+    public void onTabChanged(int position)
+    {
+        super.onTabChanged(position);
+
+        ActionBar.Tab tab = getSupportActionBar().getSelectedTab();
+        String tag = (String)tab.getTag();
+
+        if (tag == TAG_LIST && listFragment != null)
+        {
+            ((ReadingListFragment)listFragment).refresh();
         }
     }
 
