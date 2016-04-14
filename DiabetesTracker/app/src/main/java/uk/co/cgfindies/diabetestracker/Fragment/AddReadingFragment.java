@@ -39,7 +39,8 @@ import uk.co.cgfindies.diabetestracker.Model.Reading;
 public class AddReadingFragment extends BaseFragment implements
         View.OnClickListener,
         DatePickerDialog.OnDateSetListener,
-        TimePickerDialog.OnTimeSetListener
+        TimePickerDialog.OnTimeSetListener,
+        BaseFragment.FragmentSelectedListener
 {
     /**
      * The button used to add the entry
@@ -64,6 +65,12 @@ public class AddReadingFragment extends BaseFragment implements
      */
     @SaveInstanceState
     private Calendar dateTakenCalendar;
+
+    /**
+     * Whether or not the reading date has been edited by the user since it was set.
+     */
+    @SaveInstanceState
+    private boolean dateTakenEdited = false;
 
     /**
      * @return a new instance of this class
@@ -93,12 +100,7 @@ public class AddReadingFragment extends BaseFragment implements
     {
         super.onViewCreated(view, savedInstanceState);
 
-        if (dateTakenCalendar == null)
-        {
-            dateTakenCalendar = GregorianCalendar.getInstance();
-            dateTakenCalendar.setTime(new Date());
-        }
-
+        getDateTakenCalendar();
         setDateTakenField();
     }
 
@@ -119,6 +121,14 @@ public class AddReadingFragment extends BaseFragment implements
         }
     }
 
+    @Override
+    public void onFragmentSelected()
+    {
+        resetDateTakenIfUnedited();
+        clearErrors();
+        clearMessages();
+    }
+
     /**
      * Update the Calendar when the user updates the date using the DatePicker, then show the TimePicker
      * {@inheritDoc}
@@ -126,7 +136,9 @@ public class AddReadingFragment extends BaseFragment implements
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
     {
-        dateTakenCalendar.set(year, monthOfYear, dayOfMonth);
+        dateTakenEdited = true;
+
+        getDateTakenCalendar().set(year, monthOfYear, dayOfMonth);
 
         setDateTakenField();
 
@@ -140,10 +152,24 @@ public class AddReadingFragment extends BaseFragment implements
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute)
     {
-        dateTakenCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        dateTakenCalendar.set(Calendar.MINUTE, minute);
+        dateTakenEdited = true;
+
+        getDateTakenCalendar().set(Calendar.HOUR_OF_DAY, hourOfDay);
+        getDateTakenCalendar().set(Calendar.MINUTE, minute);
 
         setDateTakenField();
+    }
+
+    private Calendar getDateTakenCalendar()
+    {
+
+        if (dateTakenCalendar == null)
+        {
+            dateTakenCalendar = GregorianCalendar.getInstance();
+            dateTakenCalendar.setTime(new Date());
+        }
+
+        return dateTakenCalendar;
     }
 
     /**
@@ -151,7 +177,10 @@ public class AddReadingFragment extends BaseFragment implements
      */
     private void setDateTakenField()
     {
-        readingDate.setText(Reading.getRelativeDate(getContext(), dateTakenCalendar.getTime().getTime()));
+        if (readingDate != null)
+        {
+            readingDate.setText(Reading.getRelativeDate(getContext(), getDateTakenCalendar().getTime().getTime()));
+        }
     }
 
     /**
@@ -184,7 +213,7 @@ public class AddReadingFragment extends BaseFragment implements
             double readingNumber = Double.parseDouble(readingValue);
             reading.bloodSugarLevel = readingNumber;
 
-            reading.date_level_taken = dateTakenCalendar.getTime();
+            reading.date_level_taken = getDateTakenCalendar().getTime();
 
         }
         catch (NumberFormatException e)
@@ -228,8 +257,20 @@ public class AddReadingFragment extends BaseFragment implements
      */
     private void resetReadingDate()
     {
-        dateTakenCalendar.setTime(new Date());
+        dateTakenEdited = false;
+        getDateTakenCalendar().setTime(new Date());
         setDateTakenField();
+    }
+
+    /**
+     * Reset the Reading Date Taken calendar and field if it hasn't changed since it was set.
+     */
+    private void resetDateTakenIfUnedited()
+    {
+        if (dateTakenEdited == false)
+        {
+            resetReadingDate();
+        }
     }
 
     /**
@@ -237,14 +278,15 @@ public class AddReadingFragment extends BaseFragment implements
      */
     private void showDatePicker()
     {
+        resetDateTakenIfUnedited();
+
         new DatePickerDialog(
                 getActivity(),
                 this,
-                dateTakenCalendar.get(Calendar.YEAR),
-                dateTakenCalendar.get(Calendar.MONTH),
-                dateTakenCalendar.get(Calendar.DAY_OF_MONTH)
+                getDateTakenCalendar().get(Calendar.YEAR),
+                getDateTakenCalendar().get(Calendar.MONTH),
+                getDateTakenCalendar().get(Calendar.DAY_OF_MONTH)
         ).show();
-
     }
 
     /**
@@ -252,14 +294,15 @@ public class AddReadingFragment extends BaseFragment implements
      */
     private void showTimePicker()
     {
+        resetDateTakenIfUnedited();
+
         new TimePickerDialog(
                 getActivity(),
                 this,
-                dateTakenCalendar.get(Calendar.HOUR_OF_DAY),
-                dateTakenCalendar.get(Calendar.MINUTE),
+                getDateTakenCalendar().get(Calendar.HOUR_OF_DAY),
+                getDateTakenCalendar().get(Calendar.MINUTE),
                 true
         ).show();
-
     }
 
 }

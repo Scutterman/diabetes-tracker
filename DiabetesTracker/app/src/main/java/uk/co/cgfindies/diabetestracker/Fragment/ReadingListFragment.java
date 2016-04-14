@@ -18,7 +18,7 @@ import uk.co.cgfindies.diabetestracker.R;
 /**
  * Provides a List of Reading entities.
  */
-public class ReadingListFragment extends ListFragment {
+public class ReadingListFragment extends ListFragment implements BaseFragment.FragmentSelectedListener {
 
     @InjectDependency
     private ReadingManager readingManager;
@@ -37,13 +37,22 @@ public class ReadingListFragment extends ListFragment {
         setListAdapter(adapter);
     }
 
+    @Override
+    public void onFragmentSelected()
+    {
+        refresh();
+    }
+
     /**
      * Refresh the ListView when the data changes.
      */
     public void refresh()
     {
-        adapter.requeryData();
-        adapter.notifyDataSetChanged();
+        if (adapter != null)
+        {
+            adapter.requeryData();
+            adapter.notifyDataSetChanged();
+        }
     }
 
 }
