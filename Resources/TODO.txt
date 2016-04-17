@@ -1,0 +1,11 @@
+Generate signed APK
+
+You need to upload an APK for this application.
+
+You need to add a feature graphic. [English (United Kingdom) – en-GB]
+
+Your app is missing a required content rating. Go to your app's Content Rating page and complete a rating questionnaire.
+
+Create Tag / Github Release
+
+Tablet Screenshots
