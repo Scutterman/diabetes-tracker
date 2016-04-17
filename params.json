@@ -1,0 +1,6 @@
+{
+  "name": "Diabetes-tracker",
+  "tagline": "An app to easily track Diabetes blood sugar levels and other important information.",
+  "body": "# Diabetes Tracker\r\nAn app to easily track Diabetes blood sugar levels and other important information.\r\n\r\n#Version History\r\n##v0.1.0\r\n* Add a reading\r\n* View historic readings\r\n\r\n#Planned Features\r\n* View graph of readings over a day / week / month / year\r\n* Homescreen widget to quickly add a reading\r\n\r\n#Privacy Policy\r\nThis app will only ever store data on the local device, and will only ever store data that you specifically add to it (readings, dates, etc.)\r\n\r\nThis app will never share your data with the developers or other third parties.\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
