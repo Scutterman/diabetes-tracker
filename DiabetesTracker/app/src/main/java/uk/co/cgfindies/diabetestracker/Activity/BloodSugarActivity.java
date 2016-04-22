@@ -1,16 +1,8 @@
 package uk.co.cgfindies.diabetestracker.Activity;
 
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-
 import android.os.Bundle;
-import android.view.View;
-
-import android.widget.Button;
-
 import android.support.v4.app.Fragment;
-
-import org.droidparts.util.L;
+import android.support.v7.app.ActionBar;
 
 import uk.co.cgfindies.diabetestracker.Fragment.AddReadingFragment;
 import uk.co.cgfindies.diabetestracker.Fragment.BaseFragment;

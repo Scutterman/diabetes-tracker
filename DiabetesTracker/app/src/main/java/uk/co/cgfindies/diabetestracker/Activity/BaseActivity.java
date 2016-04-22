@@ -1,20 +1,14 @@
 package uk.co.cgfindies.diabetestracker.Activity;
 
-import org.droidparts.activity.support.v7.TabbedAppCompatActivity;
-import org.droidparts.annotation.inject.InjectView;
-import org.droidparts.util.L;
-
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+
+import org.droidparts.activity.support.v7.TabbedAppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -101,27 +95,37 @@ public class BaseActivity extends TabbedAppCompatActivity implements View.OnClic
     }
 
     /**
-     * Add a tab to the actionbar.
-     * The tab is provided by overriding getTabFromTag()
-     * The fragment is provided by overriding getFragmentFromTag()
-     * Fragments are automatically added to the ViewGroup R.id.main_content
+     * Add a tab to the actionbar, and add the corresponding fragment to the main_content ViewGroup
      *
      * @param tag The tag of the tab, also used to work out what content the tab has.
      */
     protected void addTab(String tag)
     {
+        addTab(tag, R.id.main_content);
+    }
+
+    /**
+     * Add a tab to the actionbar.
+     * The tab is provided by overriding getTabFromTag()
+     * The fragment is provided by overriding getFragmentFromTag()
+     *
+     * @param tag The tag of the tab, also used to work out what content the tab has.
+     * @param container The id of a ViewGroup to add the tab too.
+     */
+    protected void addTab(String tag, int container)
+    {
         // Get the Tab
         ActionBar.Tab tab = getTabFromTag(tag);
 
         // Get the Fragment, if it's already been added to the ViewGroup
-        Fragment fragment = (Fragment)(getSupportFragmentManager().findFragmentByTag(tag));
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
 
         // Get the Fragment and add it to the ViewGroup if it wasn't found
         if (fragment == null)
         {
             fragment = getFragmentFromTag(tag);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.main_content, fragment, tag).commit();
+            ft.add(container, fragment, tag).commit();
         }
 
         // If we found a Fragment and a Tab, add it to the tab bar.

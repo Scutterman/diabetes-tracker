@@ -10,7 +10,6 @@ import org.droidparts.model.Entity;
 import java.util.Date;
 
 import uk.co.cgfindies.diabetestracker.Contract.DB;
-import uk.co.cgfindies.diabetestracker.Core.DBOpenHelper;
 
 /**
  * Provides a container for a row in the Reading table.
