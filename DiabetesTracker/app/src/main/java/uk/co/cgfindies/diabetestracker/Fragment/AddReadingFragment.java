@@ -234,6 +234,7 @@ public class AddReadingFragment extends BaseFragment implements
         {
             // Success
             addMessage(getString(R.string.add_reading_insert_successful));
+            closeKeyboard();
             resetReadingValue();
             resetReadingDate();
         }

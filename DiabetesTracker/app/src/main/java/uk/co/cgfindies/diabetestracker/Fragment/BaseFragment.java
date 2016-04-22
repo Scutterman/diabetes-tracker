@@ -1,6 +1,5 @@
 package uk.co.cgfindies.diabetestracker.Fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 
 import org.droidparts.annotation.inject.InjectView;
 import org.droidparts.fragment.support.v4.Fragment;
-import org.droidparts.util.L;
 
 import uk.co.cgfindies.diabetestracker.Activity.BaseActivity;
 import uk.co.cgfindies.diabetestracker.R;
@@ -163,4 +161,8 @@ public class BaseFragment extends Fragment {
         }
     }
 
+    public void closeKeyboard()
+    {
+        BaseActivity.closeKeyboard(getActivity());
+    }
 }

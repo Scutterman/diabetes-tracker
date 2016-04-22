@@ -1,20 +1,22 @@
 package uk.co.cgfindies.diabetestracker.Activity;
 
 import org.droidparts.activity.support.v7.TabbedAppCompatActivity;
-import org.droidparts.annotation.inject.InjectView;
 import org.droidparts.util.L;
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -101,6 +103,17 @@ public class BaseActivity extends TabbedAppCompatActivity implements View.OnClic
     }
 
     /**
+     * Close / hide the keyboard when the tab is changed.
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    protected void onTabChanged(int position) {
+        super.onTabChanged(position);
+        closeKeyboard(this);
+    }
+
+    /**
      * Add a tab to the actionbar.
      * The tab is provided by overriding getTabFromTag()
      * The fragment is provided by overriding getFragmentFromTag()
@@ -160,6 +173,26 @@ public class BaseActivity extends TabbedAppCompatActivity implements View.OnClic
     {
         // Override to use
         return null;
+    }
+
+    /**
+     * Close/hide the soft keyboard, if it is showing.
+     *
+     * @param activity An Activity representing the Activity / InputMethodManager
+     */
+    public static void closeKeyboard(final Activity activity)
+    {
+        View focussedView = activity.getWindow().getDecorView();
+        if (focussedView == null)
+        {
+            focussedView = new View(activity);
+        }
+
+
+        focussedView.clearFocus();
+
+        InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(focussedView.getWindowToken(), 0);
     }
 
 }
