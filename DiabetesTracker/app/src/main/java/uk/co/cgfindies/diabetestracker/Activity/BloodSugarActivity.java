@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import uk.co.cgfindies.diabetestracker.Fragment.AddReadingFragment;
 import uk.co.cgfindies.diabetestracker.Fragment.BaseFragment;
 import uk.co.cgfindies.diabetestracker.Fragment.ReadingListFragment;
+import uk.co.cgfindies.diabetestracker.Fragment.ViewGraphsFragment;
 import uk.co.cgfindies.diabetestracker.R;
 
 /**
@@ -96,7 +97,7 @@ public class BloodSugarActivity extends BaseActivity
             case TAG_GRAPH:
                 if (graphFragment == null)
                 {
-                    graphFragment = BaseFragment.newInstance(getString(R.string.fragment_title_graph), getString(R.string.feature_coming));
+                    graphFragment = new ViewGraphsFragment();
                 }
                 return graphFragment;
             default:
