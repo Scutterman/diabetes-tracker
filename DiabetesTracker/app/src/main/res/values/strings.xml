@@ -30,6 +30,19 @@
         <item>Custom</item>
     </string-array>
 
+    <string-array name="graph_period_spinner_keys">
+        <item>year</item>
+        <item>month</item>
+        <item>week</item>
+        <item>day</item>
+        <item>custom</item>
+    </string-array>
+
+    <string name="graph_x_axis_label">Date</string>
+    <string name="graph_y_axis_label">Reading</string>
+
+    <string name="graph_no_data">We couldn\'t find any data for that date range.</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
