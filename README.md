@@ -2,6 +2,10 @@
 An app to easily track Diabetes blood sugar levels and other important information.
 
 #Version History
+##v0.2.0
+* Keyboard now hides when switching tabs
+* Added graphs
+
 ##v0.1.0
 * Add a reading
 * View historic readings
