@@ -9,7 +9,6 @@ import android.widget.TextView;
 import org.droidparts.annotation.inject.InjectView;
 import org.droidparts.fragment.support.v4.Fragment;
 
-import uk.co.cgfindies.diabetestracker.Activity.BaseActivity;
 import uk.co.cgfindies.diabetestracker.R;
 
 /**

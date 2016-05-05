@@ -2,16 +2,12 @@ package uk.co.cgfindies.diabetestracker.Adapter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.droidparts.adapter.cursor.EntityCursorAdapter;
 import org.droidparts.adapter.holder.Text2Holder;
 import org.droidparts.persist.sql.stmt.Select;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import uk.co.cgfindies.diabetestracker.Model.Reading;
 import uk.co.cgfindies.diabetestracker.R;

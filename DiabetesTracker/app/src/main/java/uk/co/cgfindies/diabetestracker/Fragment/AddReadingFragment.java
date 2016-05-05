@@ -4,34 +4,25 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import org.droidparts.annotation.inject.InjectResource;
 import org.droidparts.annotation.inject.InjectView;
 import org.droidparts.annotation.serialize.SaveInstanceState;
-import org.droidparts.util.L;
 import org.droidparts.widget.ClearableEditText;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import uk.co.cgfindies.diabetestracker.DB.ReadingManager;
-import uk.co.cgfindies.diabetestracker.R;
 import uk.co.cgfindies.diabetestracker.Model.Reading;
+import uk.co.cgfindies.diabetestracker.R;
 
 /**
  * Provide a fragment that can be used to input data to add to the Reading table.

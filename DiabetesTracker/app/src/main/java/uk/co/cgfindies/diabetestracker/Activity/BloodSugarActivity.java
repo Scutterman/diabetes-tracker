@@ -1,20 +1,13 @@
 package uk.co.cgfindies.diabetestracker.Activity;
 
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-
 import android.os.Bundle;
-import android.view.View;
-
-import android.widget.Button;
-
 import android.support.v4.app.Fragment;
-
-import org.droidparts.util.L;
+import android.support.v7.app.ActionBar;
 
 import uk.co.cgfindies.diabetestracker.Fragment.AddReadingFragment;
 import uk.co.cgfindies.diabetestracker.Fragment.BaseFragment;
 import uk.co.cgfindies.diabetestracker.Fragment.ReadingListFragment;
+import uk.co.cgfindies.diabetestracker.Fragment.ViewGraphsFragment;
 import uk.co.cgfindies.diabetestracker.R;
 
 /**
@@ -104,7 +97,7 @@ public class BloodSugarActivity extends BaseActivity
             case TAG_GRAPH:
                 if (graphFragment == null)
                 {
-                    graphFragment = BaseFragment.newInstance(getString(R.string.fragment_title_graph), getString(R.string.feature_coming));
+                    graphFragment = new ViewGraphsFragment();
                 }
                 return graphFragment;
             default:

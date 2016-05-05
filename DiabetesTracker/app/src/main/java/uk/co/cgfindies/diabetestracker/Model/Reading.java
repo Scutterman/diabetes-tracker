@@ -10,7 +10,6 @@ import org.droidparts.model.Entity;
 import java.util.Date;
 
 import uk.co.cgfindies.diabetestracker.Contract.DB;
-import uk.co.cgfindies.diabetestracker.Core.DBOpenHelper;
 
 /**
  * Provides a container for a row in the Reading table.
@@ -27,6 +26,12 @@ public class Reading extends Entity
     @Column(name = DB.ReadingColumn.DATE_CREATED)
     public Date date_created;
 
+    /**
+     * Get a relative date string from a timestamp
+     * @param ctx A context object
+     * @param time The timestamp to get a relative time for
+     * @return The relative date string.
+     */
     public static CharSequence getRelativeDate(Context ctx, long time)
     {
         return DateUtils.getRelativeDateTimeString(
@@ -35,7 +40,20 @@ public class Reading extends Entity
             DateUtils.MINUTE_IN_MILLIS,
             DateUtils.WEEK_IN_MILLIS,
             0
-    );
+        );
+    }
+
+    /**
+     * @return A Clone of this object
+     */
+    public Reading clone()
+    {
+        Reading clone = new Reading();
+        clone.bloodSugarLevel = bloodSugarLevel;
+        clone.date_level_taken = date_level_taken;
+        clone.date_created = date_created;
+        clone.id = id;
+        return clone;
     }
 
 }
